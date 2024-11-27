@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Complaint Details</h2>
+    <p><strong>Present status:</strong> {{ complaint.status }}</p>
+    <p><strong>Complaint Topic:</strong> {{ complaint.complaint_topic }}</p>
+    <p><strong>Description:</strong> {{ complaint.complaint_Description }}</p>
+    <p><strong>Issued Date:</strong> {{ complaint.issued_date }}</p>
+    <p><strong>Updated Date:</strong> {{ complaint.update_date }}</p>
+
+    <h4>Complaint Photos</h4>
+    <div class="row">
+        {% if complaint.image1 %}
+            <div class="col-md-4 mb-3">
+                <img src="{{ complaint.image1.url }}" class="img-fluid" alt="Complaint Image 1">
+            </div>
+        {% endif %}
+        {% if complaint.image2 %}
+            <div class="col-md-4 mb-3">
+                <img src="{{ complaint.image2.url }}" class="img-fluid" alt="Complaint Image 2">
+            </div>
+        {% endif %}
+        {% if complaint.image3 %}
+            <div class="col-md-4 mb-3">
+                <img src="{{ complaint.image3.url }}" class="img-fluid" alt="Complaint Image 3">
+            </div>
+        {% endif %}
+    </div>
+    
+    {% if not complaint.image1 and not complaint.image2 and not complaint.image3 %}
+        <p>No photos uploaded for this complaint.</p>
+    {% endif %}
+
+    <!-- <a href="{% url 'complaints' %}" class="btn btn-secondary mt-3">Back to Complaints</a> -->
+    <a href="javascript:history.back()" class="btn btn-secondary mt-3">Back to Previous Page</a>
+
+</div>
+{% endblock %}

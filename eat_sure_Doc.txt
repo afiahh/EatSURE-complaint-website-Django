@@ -1,0 +1,75 @@
+commands
+-----------
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+
+python manage.py createsuperuser
+
+
+git push and pull
+-------------------------
+
+push
+--------
+git add .
+git commit -m "Initial commit"
+git checkout -b afiah (not mandatory ig :3)
+git push -u origin afiah
+
+pull
+--------
+git pull origin main
+
+clone
+---------
+git clone <>code
+cd 'file name'
+---------------------------
+
+
+git pull from master to other branch
+-------------------
+git checkout feature-branch
+git fetch origin
+git pull origin master
+git merge master
+
+--------
+
+
+font
+https://fontawesome.com
+------------------------------------------
+
+<!-- restaurant_search.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Restaurant Search</h1>
+
+<form method="get" action="">
+    {{ form.as_p }}
+    <button type="submit">Search</button>
+</form>
+
+<h2>Results:</h2>
+<ul>
+    {% for restaurant in results %}
+        <li>{{ restaurant.name }} - {{ restaurant.address }}</li>
+    {% empty %}
+        <li>No restaurants found.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+--------------
+def restaurants_search(request):
+    form = RestaurantSearchForm(request.GET)  # initialize with GET data
+    if form.is_valid():
+        query = form.cleaned_data['query']
+        results = restaurant.objects.filter(name__icontains=query)
+        return render(request, 'searched_res_list.html', {'restaurants': results, 'query': query})
+    
+    # Render the initial search form in case of GET request without search
+    return render(request, 'search_res.html', {'form': form})

@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* Full Hero Section */
+    .hero-section {
+        position: relative;
+        background-color: #008080;
+        color: white;
+        height: 80vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0 20px;
+        box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-section h1 {
+        font-size: 4em;
+        font-weight: 800;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .hero-section p {
+        font-size: 1.4em;
+        opacity: 0.8;
+        margin-bottom: 40px;
+        font-weight: 300;
+        line-height: 1.5;
+    }
+
+    .hero-section .report-box {
+        background-color: #ff8c00;
+        color: white;
+        font-size: 2.2em;
+        font-weight: bold;
+        padding: 20px 40px;
+        border-radius: 50px;
+        text-transform: uppercase;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hero-section .report-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(236, 138, 8, 0.4);
+    }
+
+    /* Search Box */
+    .search-box {
+        position: absolute;
+        bottom: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+        max-width: 600px;
+        background-color: #fff;
+        border-radius: 50px;
+        padding: 12px 25px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+    }
+
+    .search-box input[type="text"] {
+        flex: 1;
+        border: none;
+        padding: 12px;
+        font-size: 1.2em;
+        border-radius: 30px;
+        outline: none;
+        color: #333;
+        margin-right: 15px;
+        transition: border-color 0.3s ease;
+    }
+
+    .search-box input[type="text"]:focus {
+        border-color: #ff8c00;
+    }
+
+    .search-box button {
+        background-color: #ff8c00;
+        border: none;
+        outline: none;
+        padding: 12px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .search-box button i {
+        font-size: 1.5em;
+        color: white;
+    }
+
+    .search-box:hover {
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .search-box button:hover {
+        background-color: #e17a00;
+    }
+
+    /* Call to Action Text */
+    .cta-text {
+        margin-top: 30px;
+        color: white;
+        font-size: 1.5em;
+        max-width: 600px;
+    }
+
+    .cta-text h3 {
+        font-size: 2.5em;
+        margin-bottom: 15px;
+        font-weight: 800;
+    }
+
+    .cta-text p {
+        font-size: 1.2em;
+        margin-bottom: 25px;
+        font-weight: 300;
+        opacity: 0.8;
+        line-height: 1.5;
+    }
+
+    /* Info Section */
+    .info-section {
+        background-color: #f8f8f8;
+        padding: 40px 20px;
+        text-align: center;
+        border-radius: 10px;
+        margin-top: -50px;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .info-section h2 {
+        font-size: 2.8em;
+        color: #333333;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    .info-section p {
+        font-size: 1.3em;
+        color: #555;
+        margin-bottom: 20px;
+        line-height: 1.6;
+        font-weight: 400;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        .hero-section {
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .hero-section h1 {
+            font-size: 2.5em;
+        }
+
+        .hero-section .report-box {
+            font-size: 1.8em;
+            padding: 15px 30px;
+        }
+
+        .cta-text h3 {
+            font-size: 2em;
+        }
+
+        .cta-text p {
+            font-size: 1.1em;
+        }
+
+        .info-section h2 {
+            font-size: 2.2em;
+        }
+
+        .info-section p {
+            font-size: 1.1em;
+        }
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="hero-section">
+    <p>Help us ensure the best dining experience by reporting issues at your favorite cafes</p>
+
+    <div class="report-box">
+        <i class="fas fa-cafe" style="font-size: 2em; margin-right: 10px;"></i>
+        Report a Cafe
+    </div>
+
+    <!-- Search Box -->
+    <form method="GET" action="{% url 'search' %}" class="search-box">
+        <input type="text" name="query" placeholder="Search a Restaurant..." required>
+        <button type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+    </form>
+
+    <!-- Call to Action Text -->
+    <div class="cta-text">
+        <h2>Your feedback matters!</h2>
+        <!-- <p>By reporting your experience, you help us keep cafes accountable.</p> -->
+    </div>
+</div>
+
+<!-- Info Section -->
+<div class="info-section">
+    <br><br><br>
+    <h2>Why Report a Cafe?</h2>
+    <p>Reporting ensures that the cafe is adhering to hygiene and safety standards, helping you and others have a safe dining experience.</p>
+</div>
+
+{% endblock %}

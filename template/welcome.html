@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    
+    .hero-section {
+        position: relative;
+        background-image: url('{% static "images/FoodPic.jpeg" %}');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        padding: 100px 0; /* This controls the vertical padding */
+        margin: 0;
+        width: 100%;
+        min-height: 400px; /* Adjust this value as needed */
+        text-align: center;
+        color: white;
+        overflow: hidden; /* Prevent overflow of content */
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5); /* Adjust the alpha value for darkness */
+        z-index: 1; /* Ensure overlay is above the background */
+    }
+
+    .hero-content {
+        position: relative; /* Needed to position text above the overlay */
+        z-index: 2; /* Ensure text is above the overlay */
+        padding: 20px; /* Add padding to the text content */
+    }
+
+    .about-section {
+        background-color: #008080;
+        text-align: center;
+        color: white;
+        padding: 2rem 0;
+    }
+
+    .our-services {
+        background-image: url('{% static "images/bg2.jpeg" %}');
+        background-color: #008080;
+        text-align: center;
+        padding: 2rem 0;
+        background-size: cover; /* Makes the image cover the entire section */
+        background-repeat: no-repeat; /* Prevents repeating the image */
+        background-position: center; /* Centers the image */
+    }
+
+    .last-section {
+        background-color: #008080;
+        text-align: center;
+        color: white;
+        padding: 2rem 0;
+    }
+
+    .report-btn {
+        color: #ffffff;
+        background-color: #ff9800;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    .justified-text {
+        text-align: justify;
+    margin: 0; /* Remove default margin */
+}
+
+    .align_right {
+        margin-left: auto;
+    }
+
+    .align_left {
+        margin-right: auto;
+    }
+
+    .align_mid {
+        text-align: center;
+    }
+
+    .bordered-text {
+    color: #ffffff; /* Text color */
+    font-size: 2em; /* Adjust the font size as needed */
+    text-shadow: 
+        2px 2px 0 #000,   /* Right shadow */
+        -2px -2px 0 #000, /* Left shadow */
+        2px -2px 0 #000,  /* Top right shadow */
+        -2px 2px 0 #000;  /* Bottom left shadow */
+}
+
+</style>
+
+<div class="hero-section" style="max-width: 100%;">
+    <div class="overlay"></div>
+    <div class="hero-content">
+        <h2 style="font-size: 2em; font-weight: normal;">Welcome to</h2>
+        <h1 style="font-size: 4em; font-weight: bold; color: #ff9800;">EATSure</h1>
+        <p style="font-size: 1.5em; font-weight: 500; margin-top: 10px;">A Food Safety System<br>Ensuring Safe Eats, Every Day</p>
+    </div>
+</div>
+<section id="about-us" style = "background-color: #008080;">
+<div id="about-us" class="about-section text-center text-white py-5" style="background-color: #008080;">
+    <h2 class="display-4 mb-4" style="font-weight: bold;">About Us</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="justified-text" style = "font-size: 25px;">Have you ever been to a restaurant or café where you were concerned about the cleanliness or food quality but didn’t know how to report it?</p>
+            </div>
+            <div class="col-md-6">
+                <p class="justified-text" style = "font-size: 25px;">Maybe you wanted to alert the authorities but weren’t sure who to contact or how to make sure your complaint was heard. Well, we've got just the solution for you!</p>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+
+<section class="our-services" style="max-width: 100%;">
+    <h2 class="bordered-text" style = "font-size: 50px;">Things We Do</h2>
+    <div>
+        <div class="row" >
+            <div class="col-md-4 service-card align_left">
+                <h3>Ensure Food Safety</h3>
+                <p>We help users report food safety concerns at restaurants and cafes.</p>
+            </div>
+            <div class="col-md-4 service-card align_right">
+                <h3>Connect with Authorities</h3>
+                <p>Our app directly notifies government food safety authorities and mobile courts about complaints.</p>
+            </div>
+            <div class="col-md-4 service-card" style="margin: 0 auto;">
+                <h3>Track Complaints</h3>
+                <p>You can easily monitor the status of your complaints and see how they are being addressed.</p>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4 service-card align_left">
+                <h3>Empower Consumers</h3>
+                <p>Your voice counts! Help improve dining standards by reporting problems instantly.</p>
+            </div>
+            <div class="col-md-4 service-card align_right">
+                <h3>Promote Public Health</h3>
+                <p>Our app aims to reduce food-borne illnesses by identifying and addressing food safety issues early.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="last-section">
+    <h3>We want to help you rant!</h3>
+    <p>Not happy with the food you’re getting served?</p>
+    <a href="{% url 'search' %}" class="report-btn">Report a Cafe!</a>
+</section>
+{% endblock %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (window.location.hash === '#about-us') {
+            document.getElementById('about-us').scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+</script>

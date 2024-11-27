@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .bg-image-vertical {
+        position: relative;
+        overflow: hidden;
+        background-repeat: no-repeat;
+        background-position: right center;
+        background-size: auto 100%;
+    }
+    .h-custom-2 {
+        height: 90vh;
+    }
+    .form-container {
+        max-width: 22rem;
+        padding: 2rem 1rem;
+    }
+    .form-container h3 {
+        margin-bottom: 1.5rem;
+    }
+    .form-outline {
+        margin-bottom: 1.2rem;
+    }
+    .btn-custom {
+        background-color: #ff8c00;
+        color: white;
+        padding: 0.6rem 1rem;
+    }
+    .btn-custom:hover {
+        background-color: #e07a00;
+    }
+    .link-custom {
+        color: #ff8c00;
+        text-decoration: none;
+    }
+    .link-custom:hover {
+        color: #e07a00;
+        text-decoration: underline;
+    }
+    .logo-icon {
+        margin-right: 0.5rem;
+    }
+    @media (min-width: 1025px) {
+        .h-custom-2 {
+            height: 100vh;
+        }
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row d-flex align-items-start">
+        <!-- Left Section with Logo -->
+        <div class="col-md-6 d-flex justify-content-center">
+            <img src="{{ restaurant.image.url }}" alt="{{ restaurant.name }} Logo" class="img-fluid-rounded mt-4" style="max-width: 100%; width: 60%;">
+        </div>
+
+        <!-- Right Section with Report Form -->
+        <div class="col-md-6">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <!-- Complaint Topic Dropdown -->
+                <div class="form-group">
+                    <p class="fs-4 fw-bold">Complaint Description</p>
+                    <select id="complaint_type" name="issue" class="form-control">
+                        <option value="Unhygienic Environment">Unhygienic Environment</option>
+                        <option value="Bad Quality Food">Bad Quality Food</option>
+                        <option value="Bad Service">Bad Service</option>
+                        <option value="Exceptionally High Price than MRP">Exceptionally High Price than MRP</option>
+                        <option value="Foreign Object in Food">Foreign Object in Food</option>
+                        <option value="Wait Time too Long">Wait Time too Long</option>
+                    </select>
+                </div>
+
+                <!-- Complaint Description Textarea -->
+                <div class="form-group">
+                    <textarea id="complaint_description" name="complaint_description" class="form-control" placeholder="Describe the issue..." required></textarea>
+                </div>
+
+                <!-- Image Upload Inputs -->
+                <div class="form-group">
+                    <label for="complaint_pic1">Upload up to 3 images (optional):</label>
+                    <input type="file" name="complaint_pic" class="form-control" multiple accept="image/*">
+                </div>
+
+                <!-- Submit and Back Buttons -->
+                <button type="submit" class="btn btn-danger mt-3">Submit Complaint</button>
+                <a href="{% url 'res_details' restaurant.id %}" class="btn btn-secondary mt-3">Back to Details</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
