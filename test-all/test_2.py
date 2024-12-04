@@ -8,6 +8,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
+
+
 @pytest.fixture()
 def driver():
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
@@ -127,3 +129,57 @@ def test_search_with_multiple_queries(search_term):
         # Teardown WebDriver
         driver.quit()
 
+
+@pytest.mark.parametrize("restaurant_id, complaint_type, description, image_path", [
+    (8, "Bad Quality Food", "The food was stale and smelled bad.", None),  # Valid data without image
+    (9, "Foreign Object in Food", "Found plastic in my noodles.", "E:\python\Eat_sure_git\EatSURE\static\images\Kudos.png"),  # Valid data with image
+    (10, "", "Wait time was too long.", None),  # Missing complaint type
+    (14, "Bad Service", "", None),  # Missing description
+    (11, "Unhygienic Environment", "The tables were dirty and unclean.",None),  # Valid data
+])
+
+
+def test_complaint_filing(driver, restaurant_id, complaint_type, description, image_path):
+    driver.get(f"http://127.0.0.1:8000/restaurants/{restaurant_id}/report/")  # Replace with your actual URL pattern
+    
+    try:
+        # Locate and fill the complaint type dropdown
+        complaint_type_dropdown = driver.find_element(By.ID, "complaint_type")
+        if complaint_type:
+            for option in complaint_type_dropdown.find_elements(By.TAG_NAME, "option"):
+                if option.text == complaint_type:
+                    option.click()
+                    break
+
+        # Locate and fill the complaint description textarea
+        complaint_description_field = driver.find_element(By.ID, "complaint_description")
+        complaint_description_field.send_keys(description)
+
+        # Upload images if provided
+        if image_path:
+            file_input = driver.find_element(By.NAME, "complaint_pic")
+            file_input.send_keys(image_path)
+
+        # Click the submit button
+        submit_button = driver.find_element(By.CSS_SELECTOR, ".btn-danger")
+        submit_button.click()
+
+        # Wait for success or validation error
+        success_url = f"http://127.0.0.1:8000/restaurants/{restaurant_id}/"  # Update based on your redirect
+        error_message_selector = ".error-message"  # Update if your error messages have a specific class
+
+        WebDriverWait(driver, 10).until(
+            lambda d: d.current_url == success_url or
+                      d.find_elements(By.CSS_SELECTOR, error_message_selector)
+        )
+
+        # Assertions
+        if complaint_type and description:  # Expect success
+            assert driver.current_url == success_url, f"Complaint filing failed for: {complaint_type}, {description}"
+            print(f"Complaint filed successfully for restaurant {restaurant_id}: {complaint_type}, {description}")
+        else:  # Expect validation error
+            errors = driver.find_elements(By.CSS_SELECTOR, error_message_selector)
+            assert len(errors) > 0, f"Expected error message but none found for: {complaint_type}, {description}"
+            print(f"Validation errors displayed correctly for: {complaint_type}, {description}")
+    finally:
+        driver.quit()
