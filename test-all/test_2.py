@@ -17,7 +17,7 @@ def driver():
     yield driver
     driver.quit()
 
-
+#test login function
 @pytest.mark.parametrize("username, password", [
     ("afiahR", "12345"),  # Example valid credentials
     ("user2", "pass2"),   # Invalid credentials
@@ -28,7 +28,7 @@ def driver():
     ("test2", "test2"),  # Example valid credentials
     ("wronguser", "wrongpass"),  # Invalid credentials
     ("toffee", "cat1"),  # Example valid credentials
-    ("invalid", "invalid"),  # Invalid credentials
+    ("burger", "burger"),  # valid credentials
 ])
 def test_login(driver, username, password):
     driver.get("http://127.0.0.1:8000/login/")
@@ -57,12 +57,21 @@ def test_login(driver, username, password):
 
 # Test Sign-Up Functionality
 @pytest.mark.parametrize("username, password", [
-    ("hR", "123456"),  # Example valid details
-    ("hurRy", "126"),  # Example valid details
-    ("", "126"),  # Example invalid details
+    ("hR", "123456"),  #  valid details
+    ("hurRy", "126"),  #  valid details
+    ("", "126"),  #  invalid details
+    ("abc", ""),  #  invalid details
+    ("rud", "rudro"),  #  valid details
+    ("burger", "burger"),  #  valid details
+    ("cake", "ab123"),  #  valid details
+    ("", ""),  #  invalid details
+    ("burger", "burger"),  #  invalid details, as it will be a duplicate account
+    ("burger", "coke"),  #  invalid details, username is not unique
+    
+
 ])
 def test_signup(driver, username, password):
-    driver.get("http://127.0.0.1:8000/signup/")  # Replace with your sign-up page URL
+    driver.get("http://127.0.0.1:8000/signup/")  
     
     # Locate form fields and submit button
     username_field = driver.find_element(By.ID, "username")
@@ -82,7 +91,10 @@ def test_signup(driver, username, password):
     print(f"Sign-Up passed for: {username}, {password}")
     assert driver.current_url == success_url, f"Sign-Up failed for: {username}, {password}"
 
-@pytest.mark.parametrize("search_term", ["k", "cafe", "unavailable", ""])  # Add more search terms as needed
+#test search function
+@pytest.mark.parametrize("search_term", [
+    "k", "cafe", "unavailable", "","r","ab","bfc","kudos","star"])  # search terms
+
 def test_search_with_multiple_queries(search_term):
     # Setup WebDriver
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
@@ -129,7 +141,7 @@ def test_search_with_multiple_queries(search_term):
         # Teardown WebDriver
         driver.quit()
 
-
+#test complaint filing
 @pytest.mark.parametrize("restaurant_id, complaint_type, description, image_path", [
     (8, "Bad Quality Food", "The food was stale and smelled bad.", None),  # Valid data without image
     (9, "Foreign Object in Food", "Found plastic in my noodles.", "E:\python\Eat_sure_git\EatSURE\static\images\Kudos.png"),  # Valid data with image
